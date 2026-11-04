@@ -1,8 +1,9 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Clock, Gem, Heart, Minus, Plus, Star, Users } from 'lucide-react';
 import { allTours, categories, destinationCards, faqs, featured, landingImages, reasons, reviews, type LandingTour } from '@/data/landing';
 import { tours } from '@/data/tours';
 import { A } from './Chrome';
+import heroVideo from '@/images/hero-loop.mp4';
 import '@/landing.css';
 
 /* ---------------- shared bits ---------------- */
@@ -27,11 +28,39 @@ function SectionTitle({ title, link }: { title: string; link?: { label: string; 
 
 /* ---------------- hero ---------------- */
 
+/** Hero background: the first 11 seconds of the clip, muted, on a loop. */
+const LOOP_SECONDS = 11;
+function HeroVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    // "Reduce motion": show the first frame instead of playing.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.pause(); return; }
+    v.play().catch(() => { /* autoplay blocked: the poster stays visible */ });
+  }, []);
+  return (
+    <video
+      ref={ref}
+      className="ph-img"
+      src={heroVideo}
+      poster={landingImages.heroSeine}
+      muted
+      loop
+      playsInline
+      autoPlay
+      preload="auto"
+      aria-hidden="true"
+      onTimeUpdate={(e) => { if (e.currentTarget.currentTime >= LOOP_SECONDS) e.currentTarget.currentTime = 0; }}
+    />
+  );
+}
+
 function Hero() {
   return (
     <section id="top" className="ph">
       <div className="ph-top">
-      <img className="ph-img" src={landingImages.heroSeine} alt="The Eiffel Tower and a bridge over the Seine" fetchPriority="high" />
+      <HeroVideo />
       <div className="pl-wrap ph-inner">
         <p className="ph-eyebrow">Iconic places. Authentic experiences.</p>
         <h1>Discover France,<br />Beyond the Ordinary</h1>

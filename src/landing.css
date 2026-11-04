@@ -92,29 +92,24 @@
 .ph { position: relative; margin-top: -78px; }
 .ph-top { position: relative; padding-top: 78px; padding-bottom: 96px; }
 .ph-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
-.ph-top::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(248, 244, 238, 0.7) 0, rgba(248, 244, 238, 0) 140px),
-    linear-gradient(90deg, rgba(248, 244, 238, 0.92) 0%, rgba(248, 244, 238, 0.78) 34%, rgba(248, 244, 238, 0) 58%);
-  pointer-events: none;
-}
-.ph-inner { position: relative; z-index: 2; min-height: 420px; padding-top: 56px; padding-bottom: 40px; }
-.ph-eyebrow { color: var(--pl-gold-dark); font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
-.ph h1 { margin-top: 14px; font-family: var(--pl-serif); font-weight: 500; font-size: 60px; line-height: 1.08; letter-spacing: -0.01em; }
-.ph-lede { max-width: 470px; margin: 16px 0 26px; font-size: 16px; line-height: 1.6; color: #252B38; }
+.ph-top { overflow: hidden; background: #1D2433; }
+/* A light, even dim so white text stays readable on bright frames. */
+.ph-top::before { content: ''; position: absolute; inset: 0; z-index: 1; background: rgba(12, 16, 26, 0.28); pointer-events: none; }
+.ph-inner { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; min-height: 560px; padding-top: 40px; padding-bottom: 40px; color: #fff; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35); }
+.ph-eyebrow { color: #E9D3AE; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+.ph h1 { margin-top: 14px; color: #fff; font-family: var(--pl-serif); font-weight: 500; font-size: 60px; line-height: 1.08; letter-spacing: -0.01em; }
+.ph-lede { max-width: 500px; margin: 18px 0 28px; font-size: 17px; line-height: 1.6; color: rgba(255, 255, 255, 0.92); }
+.ph-inner .pl-btn { align-self: flex-start; text-shadow: none; }
 .ph-script {
   position: absolute;
-  top: 24px;
-  right: 20px;
+  top: auto;
+  bottom: 70px;
+  right: 40px;
   font-family: var(--pl-script);
-  font-size: 30px;
+  font-size: 32px;
   line-height: 1.05;
-  color: #2E2A26;
-  text-shadow: 0 0 6px rgba(248, 244, 238, 0.95), 0 0 16px rgba(248, 244, 238, 0.9), 0 0 28px rgba(248, 244, 238, 0.8);
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
   transform: rotate(-6deg);
 }
 .ph-script::after { content: ''; display: block; width: 70px; height: 1px; margin: 10px 0 0 40px; background: currentColor; opacity: 0.6; }
@@ -318,7 +313,8 @@
   .ph-inner { min-height: 0; padding-top: 32px; padding-bottom: 36px; }
   .ph h1 { font-size: 36px; }
   .ph-lede { font-size: 15px; }
-  .ph-top::before { background: linear-gradient(180deg, rgba(248, 244, 238, 0.92) 0%, rgba(248, 244, 238, 0.8) 60%, rgba(248, 244, 238, 0.35) 100%); }
+  .ph-top::before { background: rgba(12, 16, 26, 0.36); }
+  .ph-inner { min-height: 440px; }
   .ph-card { grid-template-columns: 1fr; }
   .ph-card img { height: 150px; }
   .pl-wrap { padding: 0 20px; }
@@ -366,7 +362,13 @@
 .pl-credits ul { position: absolute; right: 0; bottom: calc(100% + 10px); z-index: 2; width: min(420px, 90vw); padding: 14px 16px; border-radius: 4px; background: #0F1729; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); line-height: 1.6; }
 .pl-credits a { text-decoration: underline; }
 
-/* Mobile: keep the Eiffel Tower (right side of the hero photo) in view. */
-@media (max-width: 720px) {
-  .ph-img { object-position: 74% 40%; }
+/* Header over the hero video: white text until you scroll. */
+.pl-header.is-over .pl-logo, .pl-header.is-over .pl-links > a, .pl-header.is-over .pl-dd > button, .pl-header.is-over .pl-icon { color: #fff; }
+.pl-header.is-over .pl-logo small { color: rgba(255, 255, 255, 0.75); }
+.pl-header.is-over .pl-logo-mark { color: #E9D3AE; }
+.pl-header.is-over .pl-links > a:hover, .pl-header.is-over .pl-dd > button:hover { color: #E9D3AE; }
+.pl-header.is-over .pl-icon:hover { background: rgba(255, 255, 255, 0.14); }
+@media (max-width: 1000px) {
+  /* The mobile menu panel is light, so keep its links dark. */
+  .pl-header.is-over .pl-links > a, .pl-header.is-over .pl-dd > button { color: var(--pl-ink); }
 }
